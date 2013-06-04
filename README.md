@@ -107,13 +107,13 @@ Note the analyzer configuration of tokenizer keyword, if you for example use the
 	    }
 	}'
 
-License
--------
+License Notice
+--------------
 
-	elasticsearch-term-plugin
+	elasticsearch-river-kafka
 	
 	Copyright 2009-2013 Shay Banon and ElasticSearch <http://www.elasticsearch.org>
-	Copyright 2013 Endgame LLC
+	Copyright 2013 Endgame LLC <http://www.endgamesystems.com/>
 	
 	This product includes software plugin developed for
 	ElasticSearch and Shay Banon – (http://http://www.elasticsearch.org/)
@@ -121,14 +121,5 @@ License
 	Inspiration was taken from Andrew Clegg and his ElasticSearch Approx Plugin
 	https://github.com/ptdavteam/elasticsearch-approx-plugin
 	
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not
-    use this file except in compliance with the License. You may obtain a copy of
-    the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-    License for the specific language governing permissions and limitations under
-    the License.
+	Licensed under Apache License, Version 2.0
+	
