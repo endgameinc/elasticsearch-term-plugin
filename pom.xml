@@ -3,7 +3,7 @@
 	<groupId>com.endgame</groupId>
 	<artifactId>elasticsearch-term-plugin</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>elasticsearch-term-plugin</name>
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
