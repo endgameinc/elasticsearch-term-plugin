@@ -107,8 +107,8 @@ Note the analyzer configuration of tokenizer keyword, if you for example use the
 	    }
 	}'
 
-License Notice
---------------
+License
+-------
 
 elasticsearch-river-kafka  
 Licensed under Apache License, Version 2.0  
