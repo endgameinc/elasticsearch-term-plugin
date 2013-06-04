@@ -1,0 +1,58 @@
+
+
+// setup test index
+//
+
+curl -XDELETE localhost:9200/my_test_index 
+
+curl -XPOST localhost:9200/my_test_index -d '{
+    "settings" : {
+        "analysis": {
+          "analyzer": {
+            "default": {
+              "filter": "lowercase", 
+              "type": "custom", 
+              "tokenizer": "keyword"
+            	}
+        	}
+    	}
+	}
+ }'  
+
+// place test data in index
+//
+
+curl -XPUT localhost:9200/my_test_index/my_test_type/1 -d '{
+	"my_test_type" : {
+	"company" : "Walt Disney",
+	"desc" : "A movie company and a TV channel",
+	"other" : {"company" : "Walt Disney Theme Parks"}
+	}
+}'
+
+curl -XPUT localhost:9200/my_test_index/my_test_type/2 -d '{
+	"my_test_type" : {
+	"company" : "Walts Plumbing",
+	"desc" : "Best plumber in town",
+	"other" : {"company" : "Walts waterproof rubber chicken company"}
+	}
+}'
+
+// query data with custom facet
+//
+
+curl -XGET localhost:9200/my_test_index/_search?pretty=1 -d '{
+    "query" : {
+        "match_all" : {  }
+    },
+    "facets" : {
+	    "term_list_facet" : {
+	      "term_list" : {
+	        "fields" : [ "company", "other.company" ],
+	        "search" : "alt",
+	        "prefix" : false,
+	        "max_per_shard" : 10
+	      }
+    	}
+    }
+}'
