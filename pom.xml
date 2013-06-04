@@ -111,4 +111,11 @@
 			<url>http://ci-1.eng.endgames.local:8081/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
+
+  <scm>
+    <connection>scm:git:git@git.endgames.local:engineering/elasticsearch-term-plugin.git</connection>
+    <url>scm:git:git@git.endgames.local:engineering/elasticsearch-term-plugin.git</url>
+    <developerConnection>scm:git:git@git.endgames.local:engineering/elasticsearch-term-plugin.git</developerConnection>
+  </scm>
+
 </project>
