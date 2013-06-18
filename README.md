@@ -110,11 +110,11 @@ Note the analyzer configuration of tokenizer keyword, if you for example use the
 License
 -------
 
-elasticsearch-river-kafka  
+elasticsearch-term-plugin  
 Licensed under Apache License, Version 2.0  
 
 Copyright 2009-2013 Shay Banon and [ElasticSearch](http://http://www.elasticsearch.org/)  
-Copyright 2013 [Endgame Inc](http://www.endgamesystems.com)  
+Copyright 2013 [Endgame Inc](http://www.endgame.com)  
 
 This product is a software plugin developed for [ElasticSearch](http://http://www.elasticsearch.org/)  
 
