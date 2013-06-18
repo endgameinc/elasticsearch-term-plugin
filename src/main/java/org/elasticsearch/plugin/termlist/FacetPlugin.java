@@ -1,4 +1,4 @@
-/* Copyright 2013 Endgame LLC
+/* Copyright 2013 Endgame Inc
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.  
@@ -13,14 +13,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.endgame.velocity.elasticsearch.plugin.termlist;
+package org.elasticsearch.plugin.termlist;
 
 import org.elasticsearch.common.inject.Module;
 import org.elasticsearch.plugins.AbstractPlugin;
 import org.elasticsearch.search.facet.FacetModule;
+import org.elasticsearch.search.facet.termlist.InternalTermListFacet;
+import org.elasticsearch.search.facet.termlist.TermListFacetParser;
 
-import com.endgame.velocity.elasticsearch.search.facet.termlist.InternalTermListFacet;
-import com.endgame.velocity.elasticsearch.search.facet.termlist.TermListFacetParser;
 
 
 /**

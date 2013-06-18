@@ -1,4 +1,4 @@
-/* Copyright 2013 Endgame LLC
+/* Copyright 2013 Endgame Inc
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.  
@@ -13,7 +13,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.endgame.velocity.elasticsearch.search.facet.termlist;
+package org.elasticsearch.search.facet.termlist;
 
 import java.util.List;
 

@@ -114,7 +114,7 @@ elasticsearch-river-kafka
 Licensed under Apache License, Version 2.0  
 
 Copyright 2009-2013 Shay Banon and [ElasticSearch](http://http://www.elasticsearch.org/)  
-Copyright 2013 [Endgame LLC](http://www.endgamesystems.com)  
+Copyright 2013 [Endgame Inc](http://www.endgamesystems.com)  
 
 This product is a software plugin developed for [ElasticSearch](http://http://www.elasticsearch.org/)  
 
