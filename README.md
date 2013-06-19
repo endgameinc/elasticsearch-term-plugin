@@ -136,3 +136,7 @@ https://github.com/ptdavteam/elasticsearch-approx-plugin
 	under the License.
 
 	
+Contributors
+-------------
+
+ - [Mark Conlin](https://github.com/meconlin)
