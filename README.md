@@ -7,13 +7,13 @@ This Term List plugin will do simple matching against the complete term list fou
 1. Build this plugin:
 
         mvn compile test package 
-        # this will create a file here: target/releases/elasticsearch-term-plugin-1.0-SNAPSHOT.zip
-        PLUGIN_PATH=`pwd`/target/releases/elasticsearch-term-plugin-1.0-SNAPSHOT.zip
+        # this will create a file here: target/releases/elasticsearch-term-plugin-1.0.1-SNAPSHOT.zip
+        PLUGIN_PATH=`pwd`/target/releases/elasticsearch-term-plugin-1.0.1-SNAPSHOT.zip
 
 2. Install the PLUGIN
 
         cd $ELASTICSEARCH_HOME
-        ./bin/plugin -url file:/$PLUGIN_PATH -install elasticsearch-term-plugin
+        ./bin/plugin -url file://$PLUGIN_PATH -install elasticsearch-term-plugin
 
 3. Updating the plugin
 
