@@ -6,7 +6,7 @@ This Term List plugin will do simple matching against the complete term list fou
 
 1. Build this plugin:
 
-        mvn compile test package 
+        mvn clean compile test package 
         # this will create a file here: target/releases/elasticsearch-term-plugin-1.0-SNAPSHOT.zip
         PLUGIN_PATH=`pwd`/target/releases/elasticsearch-term-plugin-1.0-SNAPSHOT.zip
 
@@ -27,7 +27,7 @@ Usage
 
 ##### Version
 
-ElasticSearch version 0.90.0
+ElasticSearch version 0.90.3
 
 ##### Facet Parameters
 * fields - list of fields to examine for terms, this is the only required field
