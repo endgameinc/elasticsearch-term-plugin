@@ -3,7 +3,7 @@
 	<groupId>org.elasticsearch</groupId>
 	<artifactId>elasticsearch-term-plugin</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>elasticsearch-term-plugin</name>
 	<properties>
 		<elasticsearch.version>0.90.3</elasticsearch.version>
