@@ -23,16 +23,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.elasticsearch.cache.recycler.CacheRecycler;
 import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.common.bytes.HashedBytesArray;
+import org.elasticsearch.common.collect.Lists;
 import org.elasticsearch.common.io.stream.StreamInput;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentBuilderString;
 import org.elasticsearch.search.facet.Facet;
 import org.elasticsearch.search.facet.InternalFacet;
 
-import com.google.common.collect.Lists;
 
 
 
@@ -156,11 +155,11 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 		return STREAM_TYPE;
 	}
 
-	@Override
-	public Facet reduce(ReduceContext context) {
-		return myReduce(name, context.facets());
-	}
-
+    @Override
+    public Facet reduce(ReduceContext context) {
+        return myReduce(name, context.facets());
+    }
+	
     /**
      * Takes a list of facets and returns a new facet containing the merged data from all of them.
      *
