@@ -37,6 +37,7 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.admin.indices.flush.FlushRequest;
+import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -756,7 +757,8 @@ public class TermListFacetTest extends TestCase {
 	private void flush(String index) 
 	{
 		// flush it to ensure data is present
-		client().admin().indices().flush(new FlushRequest(index).refresh(true)).actionGet();
+		client().admin().indices().flush(new FlushRequest(index)).actionGet();
+		client().admin().indices().refresh(new RefreshRequest()).actionGet();
 	}
 	
 	/**

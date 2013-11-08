@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.elasticsearch.common.CacheRecycler;
+import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.common.bytes.HashedBytesArray;
 import org.elasticsearch.common.io.stream.StreamInput;
@@ -42,7 +42,7 @@ import org.elasticsearch.search.facet.InternalFacet;
 public class InternalTermListFacet extends InternalFacet implements TermListFacet {
 
 	private final String type = "term_list";
-	private static final BytesReference STREAM_TYPE = new HashedBytesArray(TermListFacet.TYPE);
+	private static final BytesReference STREAM_TYPE = new HashedBytesArray(Strings.toUTF8Bytes(TermListFacet.TYPE));
 	private Object[] strings; 	
 	private String name; 		// plugin name
 	private boolean sort;		
@@ -110,7 +110,7 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 		final byte dataType = in.readByte();
 		switch (dataType) {
 		case 0:
-			strings = CacheRecycler.popObjectArray(size);
+			strings = new String[size];
 			break;
 		default:
 			throw new IllegalArgumentException("dataType " + dataType + " is not known");
@@ -154,11 +154,17 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 		return STREAM_TYPE;
 	}
 
-	@Override
-	public Facet reduce(List<Facet> facets) {
-		return myReduce(name, facets);
-	}
+	//@Override
+	//public Facet reduce(List<Facet> facets) {
+	//	return myReduce(name, facets);
+	//}
 
+    @Override
+    public Facet reduce(ReduceContext context) {
+        List<Facet> facets = context.facets();        
+        return myReduce(name, facets);
+    }
+	
     /**
      * Takes a list of facets and returns a new facet containing the merged data from all of them.
      *
