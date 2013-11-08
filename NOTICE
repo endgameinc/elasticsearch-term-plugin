@@ -1,7 +1,7 @@
-elasticsearch-river-kafka
+elasticsearch-term-plugin
 
-Copyright 2009-2013 Shay Banon and ElasticSearch <http://www.elasticsearch.org>
-Copyright 2013 Endgame LLC <http://www.endgamesystems.com/>
+Copyright 2009-2013 Shay Banon and ElasticSearch (http://www.elasticsearch.org)
+Copyright 2013 Endgame, Inc. (http://www.endgame.com/)
 
 This product includes software plugin developed for
 ElasticSearch and Shay Banon – (http://http://www.elasticsearch.org/)

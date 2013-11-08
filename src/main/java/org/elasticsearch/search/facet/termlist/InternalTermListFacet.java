@@ -1,4 +1,4 @@
-/* Copyright 2013 Endgame LLC
+/* Copyright 2013 Endgame, Inc.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.  
@@ -13,7 +13,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.endgame.velocity.elasticsearch.search.facet.termlist;
+package org.elasticsearch.search.facet.termlist;
 
 
 import java.io.IOException;
@@ -31,6 +31,7 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentBuilderString;
 import org.elasticsearch.search.facet.Facet;
 import org.elasticsearch.search.facet.InternalFacet;
+
 
 
 
@@ -154,11 +155,6 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 		return STREAM_TYPE;
 	}
 
-	//@Override
-	//public Facet reduce(List<Facet> facets) {
-	//	return myReduce(name, facets);
-	//}
-
     @Override
     public Facet reduce(ReduceContext context) {
         List<Facet> facets = context.facets();        
@@ -205,5 +201,4 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 	public List<? extends Object> getEntries() {
 		return entries();
 	}
-
 }
