@@ -98,7 +98,6 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 
 	@Override
     public void writeTo(final StreamOutput out) throws IOException {
-		int type = 0;
 		int size = strings.length;
 		super.writeTo(out);
 		out.writeVInt(size);
