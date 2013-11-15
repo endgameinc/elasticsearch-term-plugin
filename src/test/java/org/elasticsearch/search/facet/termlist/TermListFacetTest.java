@@ -57,6 +57,7 @@ import org.elasticsearch.node.Node;
  */
 public class TermListFacetTest extends TestCase {
 	private Node node;
+	private Node node_two;
 	private final String index = "test_index_lower";
 	private final String index_mixed = "test_index_mixed";
 	private final String facetName = "term_list_facet";
@@ -85,6 +86,7 @@ public class TermListFacetTest extends TestCase {
 		deleteAllIndices();
 		
 		node.close();
+		node_two.close();
 		if(!node.isClosed()){
 			System.out.println("node close did not work : ");
 			throw new Exception("node close did not work : ");
@@ -102,17 +104,38 @@ public class TermListFacetTest extends TestCase {
 			testFields_childrenName.add("children.name");
 			
 			Settings settings = ImmutableSettings.settingsBuilder()
-					.put("node.http.enabled", false)
+					.put("node.http.enabled", true)
 					.put("index.gateway.type", "none")
 					.put("index.number_of_shards", numberOfShards)
 					.put("index.number_of_replicas", numberOfReplicas)
 					.put("path.data", "target")
 					.put("refresh_interval", -1)
+					.put("node.name", "chicken_1")
 					.put("index.cache.field.type", "soft").build();
 	
 			node = nodeBuilder().local(true).settings(settings).clusterName("TermListFacetTest").node();
-			
 			node.start();
+			
+			// wait for green after start
+			//
+			client().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();			
+			
+			Settings settings_two = ImmutableSettings.settingsBuilder()
+					.put("node.http.enabled", true)
+					.put("index.gateway.type", "none")
+					.put("index.number_of_shards", numberOfShards)
+					.put("index.number_of_replicas", numberOfReplicas)
+					.put("path.data", "target")
+					.put("refresh_interval", -1)
+					.put("node.name", "chicken_2")
+					.put("index.cache.field.type", "soft").build();
+	
+			node_two = nodeBuilder().local(true).settings(settings_two).clusterName("TermListFacetTest").node();
+			node_two.start();			
+			
+			// wait for green after start
+			//
+			client().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();			
 			
 			// set up rules for analysis, we want lowercase, keyword tokenization
 			// (do not break up spaces)
@@ -167,8 +190,6 @@ public class TermListFacetTest extends TestCase {
 				System.out.println("Error during Setup : " + e.toString());			
 				throw new Exception("Error during Setup : ", e);
 			} 
-		
-
 	}
 	
 	/*************************************************************************************************/
@@ -238,7 +259,7 @@ public class TermListFacetTest extends TestCase {
 	public void testWithOnlyRequiredParams() throws Exception {
 		runStandardPutsAndFlush(index);
 		SearchResponse response = this.getTermList(index, testFields_name);
-
+		
 		// did the number of hits from es match the number we put in?
 		//
 		assertEquals(numOfElements, countAll(index));
@@ -246,6 +267,8 @@ public class TermListFacetTest extends TestCase {
 
 		List<? extends Object> entries = ((TermListFacet) response.getFacets().facet(facetName)).entries();
 
+		assertTrue(entries.size() > 0);
+		
 		for (Object item : entries) {
 			assertTrue( parentRandomStrings.contains(item.toString()));
 		}
@@ -259,7 +282,7 @@ public class TermListFacetTest extends TestCase {
 	public void testShardLimit() throws Exception {
 		runStandardPutsAndFlush(index);
 		SearchResponse response = this.getTermList(index, testFields_name, "a", 1, false, true, true);
-
+		
 		List<? extends Object> entries = ((TermListFacet) response.getFacets().facet(facetName)).entries();
 		
 		// did the number of hits from es match the number we put in?
@@ -637,6 +660,7 @@ public class TermListFacetTest extends TestCase {
 			fail("this test failed");
 		}
 
+		assertFalse(custom_sr.toString().startsWith("{ \"error\" : "));
 		System.out.println("SearchResponse : \n " + custom_sr.toString());
 		return custom_sr;
 	}
@@ -657,7 +681,7 @@ public class TermListFacetTest extends TestCase {
 			srb.setSearchType(SearchType.COUNT);
 			srb.addFacet(custom_facet);
 
-			System.out.println("SearchResponse Facet : \n  " + srb.toString() + "\n");
+			System.out.println("SearchRequestBuilder Facet : \n  " + srb.toString() + "\n");
 
 			ListenableActionFuture<SearchResponse> laf = srb.execute();
 			custom_sr = laf.actionGet();
@@ -674,6 +698,7 @@ public class TermListFacetTest extends TestCase {
 		}
 
 		System.out.println("SearchResponse : \n " + custom_sr.toString());
+		assertFalse(custom_sr.toString().startsWith("{ \"error\" : "));
 		return custom_sr;
 	}
 	
