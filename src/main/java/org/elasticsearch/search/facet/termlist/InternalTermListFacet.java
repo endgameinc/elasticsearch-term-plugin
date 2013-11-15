@@ -15,8 +15,8 @@
  */
 package org.elasticsearch.search.facet.termlist;
 
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,13 +27,14 @@ import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.common.bytes.HashedBytesArray;
 import org.elasticsearch.common.collect.Lists;
 import org.elasticsearch.common.io.stream.StreamInput;
+import org.elasticsearch.common.io.stream.StreamOutput;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentBuilderString;
 import org.elasticsearch.search.facet.Facet;
 import org.elasticsearch.search.facet.InternalFacet;
-
-
-
+import org.elasticsearch.search.facet.terms.TermsFacet.ComparatorType;
+import org.elasticsearch.search.facet.terms.TermsFacet.Entry;
+import org.elasticsearch.search.facet.terms.strings.InternalStringTermsFacet.TermEntry;
 
 /**
  * InternalTermListFacet
@@ -44,8 +45,7 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 
 	private final String type = "term_list";
 	private static final BytesReference STREAM_TYPE = new HashedBytesArray(TermListFacet.TYPE.getBytes());
-	private Object[] strings; 	
-	private String name; 		// plugin name
+	private Object[] strings; 			
 	private boolean sort;		
 
     /**
@@ -56,7 +56,6 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
      */
     public InternalTermListFacet(final String facetName, final Object[] strings, boolean sort) {
     	super(facetName);
-    	this.name = facetName;
         this.strings = strings;
         this.sort = sort;
     }
@@ -70,7 +69,7 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 	/**
 	 * Register streams.
 	 */
-	public static void registerStreams() {
+	public static void registerStream() {
 		Streams.registerStream(STREAM, STREAM_TYPE);
 	}
 
@@ -93,29 +92,25 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 	 */
 	public static InternalTermListFacet readTermListFacet(final StreamInput in) throws IOException {
 		final InternalTermListFacet facet = new InternalTermListFacet();
-		facet.readFrom(in);
+		facet.readFrom(in);		
 		return facet;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.elasticsearch.common.io.stream.Streamable#readFrom(org.elasticsearch
-	 * .common.io.stream.StreamInput)
-	 */
+	@Override
+    public void writeTo(final StreamOutput out) throws IOException {
+		int size = strings.length;
+		super.writeTo(out);
+		out.writeVInt(size);
+		for (int i = 0; i < size; i++) {
+			out.writeString((String) strings[i]);
+		}
+    }
+	
 	@Override
 	public void readFrom(final StreamInput in) throws IOException {
-		name = in.readString();
+		super.readFrom(in);
 		final int size = in.readVInt();
-		final byte dataType = in.readByte();
-		switch (dataType) {
-		case 0:
-			strings = Lists.newArrayListWithCapacity(size).toArray();
-			break;
-		default:
-			throw new IllegalArgumentException("dataType " + dataType + " is not known");
-		}
+		strings = new Object[size];
 		for (int i = 0; i < size; i++) {
 			strings[i] = in.readString();
 		}
@@ -125,7 +120,6 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
      * Output JSON fields
      */
     static final class Fields {
-
         /** The Constant _TYPE. */
         static final XContentBuilderString _TYPE = new XContentBuilderString("_type");
 
@@ -133,12 +127,9 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
         static final XContentBuilderString ENTRIES = new XContentBuilderString("entries");
     }
 	
-    /* (non-Javadoc)
-     * @see org.elasticsearch.common.xcontent.ToXContent#toXContent(org.elasticsearch.common.xcontent.XContentBuilder, org.elasticsearch.common.xcontent.ToXContent.Params)
-     */
     @Override
     public XContentBuilder toXContent(final XContentBuilder builder, final Params params) throws IOException {
-        builder.startObject(name);
+        builder.startObject(this.getName());
         builder.field(Fields._TYPE, TermListFacet.TYPE);
         builder.array(Fields.ENTRIES, strings);
         builder.endObject();
@@ -157,7 +148,7 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
 
     @Override
     public Facet reduce(ReduceContext context) {
-        return myReduce(name, context.facets());
+        return myReduce(this.getName(), context.facets());
     }
 	
     /**
@@ -168,7 +159,6 @@ public class InternalTermListFacet extends InternalFacet implements TermListFace
      * @return the resulting reduced facet
      */
     public Facet myReduce(final String name, final List<Facet> facets) {
-
         final Set<String> reducedStrings = new HashSet<String>();
 
         for(final Facet facet : facets) {

@@ -45,7 +45,7 @@ public class FacetPlugin extends AbstractPlugin {
     	if(module instanceof FacetModule)
     	{
     		((FacetModule) module).addFacetProcessor(TermListFacetParser.class);			// our processor goes here
-    		InternalTermListFacet.registerStreams();
+    		InternalTermListFacet.registerStream();
     	}
     }
 }
