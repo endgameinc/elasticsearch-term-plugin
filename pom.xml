@@ -3,10 +3,10 @@
 	<groupId>org.elasticsearch</groupId>
 	<artifactId>elasticsearch-term-plugin</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<name>elasticsearch-term-plugin</name>
 	<properties>
-		<elasticsearch.version>0.90.0</elasticsearch.version>
+		<elasticsearch.version>0.90.6</elasticsearch.version>
 	</properties>	
 	<dependencies>
 		<dependency>
@@ -21,6 +21,18 @@
 			<version>${elasticsearch.version}</version>
 			<scope>compile</scope>
 		</dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0.1</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -93,4 +105,23 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://ci-1.eng.endgames.local:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://ci-1.eng.endgames.local:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+  <scm>
+    <connection>scm:git:git@git.endgames.local:engineering/elasticsearch-term-plugin.git</connection>
+    <url>scm:git:git@git.endgames.local:engineering/elasticsearch-term-plugin.git</url>
+    <developerConnection>scm:git:git@git.endgames.local:engineering/elasticsearch-term-plugin.git</developerConnection>
+  </scm>
+
 </project>

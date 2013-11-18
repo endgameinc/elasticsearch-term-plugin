@@ -68,7 +68,7 @@ public class TermListFacetParser extends AbstractComponent implements FacetParse
 	@Inject
 	public TermListFacetParser(final Settings settings) {
 		super(settings);
-		InternalTermListFacet.registerStreams();
+		InternalTermListFacet.registerStream();
 	}
 
 	public FacetExecutor parse(String facetName, XContentParser parser, SearchContext context) throws IOException {
