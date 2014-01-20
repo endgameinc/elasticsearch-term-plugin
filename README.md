@@ -59,10 +59,10 @@ ElasticSearch version 0.90.6
       "term_list_facet":{
          "_type":"term_list",
          "entries":[
-            "alternet magic inc.",
-	    "altech tech technology chickens",
-	    "system altibox corp",
-	    "baltiware tv station llc"
+             "alternet magic inc.",
+             "altech tech technology chickens",
+             "system altibox corp",
+             "baltiware tv station llc"
          ]
       }
    }
