@@ -52,6 +52,21 @@ ElasticSearch version 0.90.6
 	    	}
 	    }
 
+##### Results Example
+```
+   ...
+   "facets":{
+      "term_list_facet":{
+         "_type":"term_list",
+         "entries":[
+            "alternet magic inc.",
+	    "altech tech technology chickens",
+	    "system altibox corp",
+	    "baltiware tv station llc"
+         ]
+      }
+   }
+```
 ###### setup test index
 Note the analyzer configuration of tokenizer keyword, if you for example use the whitespace tokenizer your results will be strange
 
@@ -106,6 +121,11 @@ Note the analyzer configuration of tokenizer keyword, if you for example use the
 	    	}
 	    }
 	}'
+
+
+
+
+
 
 License
 -------
